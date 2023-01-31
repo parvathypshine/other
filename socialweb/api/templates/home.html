@@ -1,0 +1,93 @@
+{%extends 'index.html'%}
+{%block body_block%}
+
+
+
+       
+            {%for q in posts%}
+            <div class="col-3 mt-3 ">
+                <div class="card" style="width: 700%;">
+                    <h4 class="card-title ">{{ q.user}}</h4>
+                    {%if q.image%}
+                    <a href="#!"><img class="card-img-top" src="{{q.image.url}}" alt="..." /></a>
+                    {%endif%}
+                    <div class="card-body">
+                        <h4 class="card-title">{{q.caption}}</h4>
+                        <p class="card-text small text-muted">{{q.posted_date}}</p>
+                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+
+                        <form action="{%url 'addcomment' q.id%}" method="post">
+                            {%csrf_token%}
+                            {{form.as_p}}
+                            <input type="submit" value="Add Comment" class=" mb-2 btn btn-warning">
+                        </form>
+                        
+                        
+<!--                       
+                            {%csrf_token%}
+                            
+                            <input type="hidden" name="next" value="{{request.path}}">
+                            <button style="background-color: transparent; border:none; box-shadow:none" type="submit">
+                                <i class="fa-sharp fa-solid fa-thumbs-up"></i></button>
+                        </form>
+                        </div> --> -->
+
+
+<!-- 
+                        <p>
+                    
+                            <button class="btn btn-primary form-control" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                              Answers
+                            </button>
+                          </p>
+                          <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                              <ul class="list-group">
+                                {%for ans in q.fetch_comments%}
+                                <li class="list-group-item">
+                                  
+                                  
+        
+                                   <h2 class="card-title-h4"> {{ans.comment}}</h2>
+                                    <div class="small text-muted">replied on {{ans.posted_date}} by {{ans.user}}</div>
+                                    {%if ans.user == request.user%}
+                                          <a href="{%url 'remove-answer' ans.id%}" class="btn btn-sm btn-outline-danger">Remove</a>
+                                    {%endif%}
+                                </li>
+                                {%endfor%}
+                              </ul>
+                            </div>
+                          </div> -->
+                        <p>
+
+                            <button class="btn btn-info form-control" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Comments
+                            </button>
+
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <ul class="list-group">
+                                    {%for ans in q.fetch_comments%}
+                                    <li class="list-group-item">
+                                        <h2 class="card-title h4">{{ans.comment}}</h2>
+                                        <div class="small text-muted">replied on {{ans.posted_date}} by {{ans.user}}</div>
+                                        {%if ans.user == request.user %}
+                                      
+                                        <a href="{%url 'remove-answer' ans.id%}" class="btn btn-sm btn-outline-danger">Remove</a>
+                                        {%endif%}
+                                    </li>
+                                    {%endfor%}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+            {%endfor%}
+        
+            
+{%endblock%}
